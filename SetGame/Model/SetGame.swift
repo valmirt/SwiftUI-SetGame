@@ -22,7 +22,7 @@ struct SetGame {
     private(set) var correctlySets: Int = 0
     
     var canAddMoreCards: Bool {
-        currentShowCards.count <= firstRoundCards
+        currentShowCards.count <= firstRoundCards && cards.count >= 3
     }
     
     init() {
@@ -110,7 +110,11 @@ struct SetGame {
                                 currentShowCards[index] = currentShowCards.last!
                                 currentShowCards.removeLast()
                             } else {
-                                currentShowCards[index] = cards.removeFirst()
+                                if cards.count > 0 {
+                                    currentShowCards[index] = cards.removeFirst()
+                                } else {
+                                    currentShowCards.remove(at: index)
+                                }
                             }
                         }
                     }
