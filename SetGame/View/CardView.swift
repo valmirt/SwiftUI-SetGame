@@ -27,20 +27,20 @@ struct CardView: View {
                     .stroke(lineWidth: edgeWidth)
                 VStack {
                     Group {
-                        if card.shading == .open {
-                            ForEach(0..<card.quantity) { _ in
+                        ForEach(0..<card.quantity) { _ in
+                            ZStack {
                                 switch card.shape {
-                                case .diamond: DiamondShape().stroke(lineWidth: edgeWidth)
-                                case .rectangle: RoundedRectangle(cornerRadius: 0).stroke(lineWidth: edgeWidth)
-                                case .oval: Capsule().stroke(lineWidth: edgeWidth)
-                                }
-                            }
-                        } else {
-                            ForEach(0..<card.quantity) { _ in
-                                switch card.shape {
-                                case .diamond: DiamondShape().opacity(opacity)
-                                case .rectangle: RoundedRectangle(cornerRadius: 0).opacity(opacity)
-                                case .oval: Capsule().opacity(opacity)
+                                case .diamond:
+                                    if card.shading != .open { DiamondShape().opacity(opacity) }
+                                    DiamondShape().stroke(lineWidth: edgeWidth)
+                                case .rectangle:
+                                    if card.shading != .open {
+                                        RoundedRectangle(cornerRadius: 0).opacity(opacity)
+                                    }
+                                    RoundedRectangle(cornerRadius: 0).stroke(lineWidth: edgeWidth)
+                                case .oval:
+                                    if card.shading != .open { Capsule().opacity(opacity) }
+                                    Capsule().stroke(lineWidth: edgeWidth)
                                 }
                             }
                         }
@@ -60,7 +60,7 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        let card = SetGame.Card(shape: .diamond, shading: .open, color: .blue, quantity: 3
+        let card = SetGame.Card(shape: .diamond, shading: .striped, color: .blue, quantity: 3
         )
         CardView(card: card)
             .previewLayout(.fixed(width: 300, height: 450))

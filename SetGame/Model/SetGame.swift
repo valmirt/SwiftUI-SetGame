@@ -41,10 +41,10 @@ struct SetGame {
                         case 3: shading = .open
                         default: break
                         }
-                        var color = Color.blue
+                        var color = Color.purple
                         switch colorIndex {
-                        case 2: color = .yellow
-                        case 3: color = .pink
+                        case 2: color = .green
+                        case 3: color = .red
                         default: break
                         }
                         cards.append(Card(shape: shape, shading: shading, color: color, quantity: index))
