@@ -9,10 +9,31 @@ import Foundation
 
 final class SetGameViewModel: ObservableObject {
     @Published private var model: SetGame = SetGame()
-    private let firstRoundCards = 12
     
     //MARK: - Access to the Model
     var firstCards: [SetGame.Card] {
-        Array(model.cards.prefix(firstRoundCards))
+        model.currentShowCards
+    }
+    var deckCount: Int {
+        model.cards.count
+    }
+    var setsCount: Int {
+        model.correctlySets
+    }
+    var canAddMoreCards: Bool {
+        model.canAddMoreCards
+    }
+    
+    //MARK: - Intent(s)
+    func choose(card: SetGame.Card) {
+        model.choose(card: card)
+    }
+    
+    func addThreeMoreCards() {
+        model.addThreeMoreCards()
+    }
+    
+    func startNewGame() {
+        model = SetGame()
     }
 }

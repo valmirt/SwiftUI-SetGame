@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BackgroundView: View {
-    var colors: [Color] = [.blue, Color("customGreen")]
+    var colors: [Color] = [.yellow, Color("customYellow")]
     
     var body: some View {
         LinearGradient(

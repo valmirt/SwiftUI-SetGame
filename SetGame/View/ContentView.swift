@@ -15,12 +15,43 @@ struct ContentView: View {
             BackgroundView()
                 .ignoresSafeArea()
             
-            Grid(viewModel.firstCards) { card in
-                CardView(card: card)
-                    .padding(5)
+            VStack {
+                HStack {
+                    if viewModel.canAddMoreCards {
+                        Button(action: {
+                            viewModel.addThreeMoreCards()
+                        }, label: { Text("Add 3 Cards") })
+                    }
+                    Spacer()
+                    Button(action: {
+                        viewModel.startNewGame()
+                    }, label: { Text("New Game") })
+                }
+                .font(.system(size: 22, weight: .medium))
+                .padding([.leading, .trailing, .top])
+                
+                Grid(viewModel.firstCards) { card in
+                    CardView(card: card)
+                        .padding(5)
+                        .foregroundColor(.blue)
+                        .onTapGesture {
+                            withAnimation(.easeInOut) {
+                                viewModel.choose(card: card)
+                            }
+                        }
+                }
+                
+                HStack {
+                    Text("Deck: \(viewModel.deckCount)")
+                    Spacer()
+                    Text("Sets: \(viewModel.setsCount)")
+                }
+                .padding([.leading, .trailing, .bottom])
+                .font(.system(size: 22, weight: .medium))
             }
+            .foregroundColor(.black)
         }
-        .foregroundColor(.white)
+        
     }
 }
 

@@ -25,6 +25,7 @@ struct CardView: View {
                     .fill(Color.white)
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(lineWidth: edgeWidth)
+                    .opacity(card.isSelected ? 1 : 0)
                 VStack {
                     Group {
                         ForEach(0..<card.quantity) { _ in
@@ -32,15 +33,15 @@ struct CardView: View {
                                 switch card.shape {
                                 case .diamond:
                                     if card.shading != .open { DiamondShape().opacity(opacity) }
-                                    DiamondShape().stroke(lineWidth: edgeWidth)
+                                    DiamondShape().stroke(lineWidth: edgeWidthShape)
                                 case .rectangle:
                                     if card.shading != .open {
                                         RoundedRectangle(cornerRadius: 0).opacity(opacity)
                                     }
-                                    RoundedRectangle(cornerRadius: 0).stroke(lineWidth: edgeWidth)
+                                    RoundedRectangle(cornerRadius: 0).stroke(lineWidth: edgeWidthShape)
                                 case .oval:
                                     if card.shading != .open { Capsule().opacity(opacity) }
-                                    Capsule().stroke(lineWidth: edgeWidth)
+                                    Capsule().stroke(lineWidth: edgeWidthShape)
                                 }
                             }
                         }
@@ -55,7 +56,8 @@ struct CardView: View {
     }
     
     private let cornerRadius: CGFloat = 10
-    private let edgeWidth: CGFloat = 3
+    private let edgeWidth: CGFloat = 4
+    private let edgeWidthShape: CGFloat = 2
 }
 
 struct CardView_Previews: PreviewProvider {
