@@ -8,30 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var viewModel: SetGameViewModel
+    
     var body: some View {
-        VStack {
-            DiamondShape()
-                .stroke(lineWidth: 3)
-                .foregroundColor(.blue)
-                .frame(width: 300, height: 150)
+        ZStack {
+            BackgroundView()
+                .ignoresSafeArea()
             
-            RoundedRectangle(cornerRadius: 0)
-                .foregroundColor(.orange)
-                .opacity(0.4)
-                .frame(width: 300, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
-                .padding()
-            
-            Capsule()
-                .foregroundColor(.red)
-                .frame(width: 300, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
-                .padding()
+            Grid(viewModel.firstCards) { card in
+                CardView(card: card)
+                    .padding(5)
+            }
         }
-        .padding()
+        .foregroundColor(.white)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: SetGameViewModel())
     }
 }
