@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-enum SetShape {
+enum SetShape: CaseIterable {
     case diamond, rectangle, oval
 }
 
-enum ShadingShape {
+enum ShadingShape: CaseIterable {
     case solid, striped, open
 }
 
 struct SetGame {
     private let firstRoundCards = 12
-    private(set) var cards: [Card]
+    private(set) var cards: [Card] = []
     private(set) var currentShowCards: [Card] = []
     private(set) var correctlySets: Int = 0
     
@@ -25,30 +25,14 @@ struct SetGame {
         currentShowCards.count <= firstRoundCards && cards.count >= 3
     }
     
-    init() {
+    mutating func startSetGame() {
         cards = []
-        createSetDeck()
-        cards.shuffle()
-        startSetGame()
-    }
-    
-    private mutating func createSetDeck() {
-        for shapeIndex in 1...3 {
-            for shadingIndex in 1...3 {
+        currentShowCards = []
+        correctlySets = 0
+        for shape in SetShape.allCases {
+            for shading in ShadingShape.allCases {
                 for colorIndex in 1...3 {
                     for index in 1...3 {
-                        var shape = SetShape.diamond
-                        switch shapeIndex {
-                        case 2: shape = .rectangle
-                        case 3: shape = .oval
-                        default: break
-                        }
-                        var shading = ShadingShape.solid
-                        switch shadingIndex {
-                        case 2: shading = .striped
-                        case 3: shading = .open
-                        default: break
-                        }
                         var color = Color.purple
                         switch colorIndex {
                         case 2: color = .green
@@ -60,9 +44,7 @@ struct SetGame {
                 }
             }
         }
-    }
-    
-    private mutating func startSetGame() {
+        cards.shuffle()
         for _ in 0..<firstRoundCards {
             currentShowCards.append(cards.removeFirst())
         }

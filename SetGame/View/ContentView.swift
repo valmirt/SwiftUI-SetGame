@@ -19,12 +19,16 @@ struct ContentView: View {
                 HStack {
                     if viewModel.canAddMoreCards {
                         Button(action: {
-                            viewModel.addThreeMoreCards()
+                            withAnimation(.easeInOut(duration: 0.75)) {
+                                viewModel.addThreeMoreCards()
+                            }
                         }, label: { Text("Add 3 Cards") })
                     }
                     Spacer()
                     Button(action: {
-                        viewModel.startNewGame()
+                        withAnimation(.easeInOut(duration: 0.75)) {
+                            viewModel.startNewGame()
+                        }
                     }, label: { Text("New Game") })
                 }
                 .font(.system(size: 22, weight: .medium))
@@ -35,10 +39,11 @@ struct ContentView: View {
                         .padding(5)
                         .foregroundColor(.blue)
                         .onTapGesture {
-                            withAnimation(.easeInOut) {
+                            withAnimation(.easeInOut(duration: 0.75)) {
                                 viewModel.choose(card: card)
                             }
                         }
+                        .transition(.move(edge: Edge.allCases.randomElement()!))
                 }
                 
                 HStack {
@@ -51,7 +56,11 @@ struct ContentView: View {
             }
             .foregroundColor(.black)
         }
-        
+        .onAppear {
+            withAnimation(.easeInOut(duration: 0.75)) {
+                viewModel.startNewGame()
+            }
+        }
     }
 }
 

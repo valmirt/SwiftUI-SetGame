@@ -26,6 +26,7 @@ struct CardView: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(lineWidth: edgeWidth)
                     .opacity(card.isSelected ? 1 : 0)
+                    .animation(.easeInOut)
                 VStack {
                     Group {
                         ForEach(0..<card.quantity) { _ in
